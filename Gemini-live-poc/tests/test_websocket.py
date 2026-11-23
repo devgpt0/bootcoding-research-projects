@@ -120,6 +120,10 @@ def test_websocket_relays_audio_and_completes_evaluation(monkeypatch):
         })
 
         assert websocket.receive_json()["type"] == "connected"
+        started = websocket.receive_json()
+        assert started["type"] == "interview_started"
+        assert started["remaining_seconds"] <= 30 * 60
+        assert started["deadline"] > 0
         assert websocket.receive_bytes() == b"\x03\x04"
         assert websocket.receive_json() == {
             "type": "transcript",
@@ -131,11 +135,6 @@ def test_websocket_relays_audio_and_completes_evaluation(monkeypatch):
             "type": "transcript_final",
             "speaker": "interviewer",
         }
-        started = websocket.receive_json()
-        assert started["type"] == "interview_started"
-        assert started["remaining_seconds"] <= 30 * 60
-        assert started["deadline"] > 0
-
         websocket.send_bytes(b"\x00\x00")
 
         assert websocket.receive_bytes() == b"\x01\x02"

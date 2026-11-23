@@ -78,3 +78,14 @@ def test_actual_interview_duration_uses_full_configured_duration(duration: int, 
     session.start()
     assert session.started_event.is_set()
     assert session.started_at >= created_at
+
+
+def test_session_start_is_idempotent_and_does_not_reset_deadline() -> None:
+    session = InterviewSession(config=make_config())
+    session.start()
+    original_start = session.started_at
+
+    session.start()
+
+    assert session.started_event.is_set()
+    assert session.started_at == original_start

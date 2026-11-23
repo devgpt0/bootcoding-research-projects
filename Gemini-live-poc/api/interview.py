@@ -82,6 +82,18 @@ async def live_interview(websocket: WebSocket) -> None:
         await finalize_transcript("candidate", announce=announce)
         await finalize_transcript("interviewer", announce=announce)
 
+    async def start_timed_interview() -> None:
+        """Start once when Gemini begins delivering the opening question."""
+        if greeting_complete.is_set():
+            return
+        greeting_complete.set()
+        session_state.start()
+        await send_json({
+            "type": "interview_started",
+            "remaining_seconds": session_state.remaining_seconds,
+            "deadline": session_state.started_at.timestamp() + session_state.actual_duration_seconds,
+        })
+
     async def save_transcript_only() -> None:
         """Preserve any captured transcript even if evaluation is unavailable."""
         nonlocal artifacts_saved
@@ -244,7 +256,13 @@ async def live_interview(websocket: WebSocket) -> None:
             """Forward Gemini audio, transcripts and turn-completion events."""
             async for event in live.receive_events():
                 if event.audio:
+                    await start_timed_interview()
                     await send_audio(event.audio)
+
+                if event.output_transcript:
+                    # Text-only model events still indicate that the opening
+                    # response has started, even if no audio chunk is emitted.
+                    await start_timed_interview()
 
                 if event.input_transcript:
                     transcript_buffers["candidate"] += event.input_transcript
@@ -270,16 +288,6 @@ async def live_interview(websocket: WebSocket) -> None:
                     final_turn_complete.set()
                     await send_json({"type": "turn_complete"})
                     await finalize_all_transcripts()
-                    if not greeting_complete.is_set():
-                        greeting_complete.set()
-                        session_state.start()
-                        # This event tells the browser to open its microphone.
-                        # Wait until Gemini has completed the spoken introduction.
-                        await send_json({
-                            "type": "interview_started",
-                            "remaining_seconds": session_state.remaining_seconds,
-                            "deadline": session_state.started_at.timestamp() + session_state.actual_duration_seconds,
-                        })
 
         receiver_task = asyncio.create_task(
             gemini_to_browser(),
