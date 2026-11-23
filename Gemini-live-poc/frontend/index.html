@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101928">
+  <title>AI Interview Studio - Setup</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="AI Interview Studio home"><span class="brand-mark">O</span> Interview Studio</a>
+    <span class="topbar-label">GEMINI LIVE | VOICE INTERVIEW</span>
+  </header>
+  <main>
+    <section class="screen setup-layout">
+      <div class="intro">
+        <p class="eyebrow">PRACTICE WITH PURPOSE</p>
+        <h1>A thoughtful interview,<br><span>built around your role.</span></h1>
+        <p class="intro-copy">Configure a real-time voice interview tailored to your experience, role, and job description.</p>
+        <div class="privacy-note"><span aria-hidden="true">*</span><span>Your microphone is used only during the interview.</span></div>
+      </div>
+      <form id="setup-form" class="setup-card">
+        <div class="card-heading"><div><p class="eyebrow">GET STARTED</p><h2>Interview setup</h2></div><span class="step-badge">01</span></div>
+        <div class="field-grid">
+          <label>Candidate name<input name="candidate_name" required maxlength="120" placeholder="e.g. Jordan Lee"></label>
+          <label>Job role<input name="job_role" required minlength="2" maxlength="160" placeholder="e.g. Product Manager"></label>
+          <label>Experience level<select name="experience_level" required><option value="Fresher">Fresher</option><option value="Junior">Junior</option><option value="Mid-level" selected>Mid-level</option><option value="Senior">Senior</option></select></label>
+          <label>Interview type<select name="interview_type"><option>Mixed</option><option>Technical</option><option>HR</option><option>Behavioral</option><option>Managerial</option></select></label>
+          <label>Duration<select name="duration_minutes"><option value="15">15 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select></label>
+          <label>Topics <span class="optional">OPTIONAL</span><input name="topics" placeholder="Comma separated, e.g. SQL, teamwork"></label>
+        </div>
+        <label>Job description <span class="optional">OPTIONAL</span><textarea name="job_description" rows="4" maxlength="10000" placeholder="Paste role responsibilities or requirements to tailor the interview."></textarea></label>
+        <button id="submit-config-button" class="primary-button" type="submit"><span>Submit configuration</span><span aria-hidden="true">&gt;</span></button>
+        <p id="setup-error" class="error-message" role="alert"></p>
+      </form>
+    </section>
+  </main>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>

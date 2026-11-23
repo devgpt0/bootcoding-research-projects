@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101928">
+  <title>AI Interview Studio - Interview</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="AI Interview Studio home"><span class="brand-mark">O</span> Interview Studio</a>
+    <a class="topbar-label back-link" href="/">BACK TO SETUP</a>
+  </header>
+  <main>
+    <section id="interview-ready" class="ready-card">
+      <p class="eyebrow">YOUR INTERVIEW IS READY</p>
+      <h1 id="ready-role">Interview</h1>
+      <p id="ready-details" class="intro-copy"></p>
+      <p class="ready-description">The interviewer will begin by asking you to introduce yourself. Allow microphone access when prompted.</p>
+      <button id="begin-interview-button" class="primary-button" type="button"><span>Start interview</span><span aria-hidden="true">&gt;</span></button>
+      <p id="ready-error" class="error-message" role="alert"></p>
+    </section>
+
+    <section id="interview-screen" class="screen interview-layout" hidden>
+      <div class="interview-main">
+        <div class="interview-heading"><div><p class="eyebrow">LIVE INTERVIEW</p><h1 id="role-heading">Interview</h1><p id="candidate-heading" class="muted"></p></div><div class="timer-box"><span>TIME LEFT</span><strong id="timer">30:00</strong></div></div>
+        <div class="voice-panel"><div id="voice-orb" class="voice-orb"><span></span><span></span><span></span></div><p id="voice-state" class="voice-state">Connecting...</p><p id="connection-state" class="connection-state"><span class="connection-dot"></span> Waiting to connect</p></div>
+        <div class="controls"><button id="mic-button" class="mic-button" type="button" disabled aria-label="Toggle microphone">MIC</button><span id="mic-label">Microphone connecting</span><button id="end-button" class="end-button" type="button" disabled>Complete interview</button></div>
+        <p id="interview-error" class="error-message" role="alert"></p>
+      </div>
+      <aside class="transcript-panel"><div class="transcript-heading"><div><p class="eyebrow">CONVERSATION</p><h2>Live transcript</h2></div><span id="transcript-count" class="transcript-count">0</span></div><div id="transcript" class="transcript" aria-live="polite"><p class="transcript-empty">Your conversation will appear here as you speak.</p></div></aside>
+    </section>
+
+    <section id="results-panel" class="results-panel" hidden>
+      <p class="eyebrow">INTERVIEW COMPLETE</p>
+      <h2>Your report is ready</h2>
+      <p id="results-summary"></p>
+      <div class="results-meta"><span>Overall score</span><strong id="results-score">--</strong><span>Recommendation</span><strong id="results-recommendation">--</strong></div>
+      <div id="results-strengths"></div>
+      <p id="results-error" class="error-message" role="alert"></p>
+      <a class="primary-button button-link" href="/">Start another interview</a>
+    </section>
+  </main>
+  <script src="/static/interview.js" defer></script>
+</body>
+</html>
