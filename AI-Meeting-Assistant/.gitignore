@@ -1,0 +1,33 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+frontend/.env*
+!frontend/.env.example
+
+# Python virtual environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+
+# Frontend dependencies and builds
+node_modules/
+frontend/dist/
+frontend/build/
+
+# Generated local meeting data (keep directory placeholders)
+storage/meetings/*
+storage/transcripts/*
+storage/summaries/*
+!storage/meetings/.gitkeep
+!storage/transcripts/.gitkeep
+!storage/summaries/.gitkeep
+
+# Editor and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
