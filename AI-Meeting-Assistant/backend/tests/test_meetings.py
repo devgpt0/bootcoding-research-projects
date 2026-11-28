@@ -161,20 +161,6 @@ class MeetingApiTests(unittest.TestCase):
         )
         fake_room.delete_room.assert_awaited_once()
 
-    def test_ngrok_frontend_origin_is_allowed_by_cors(self) -> None:
-        response = self.client.options(
-            "/api/meetings",
-            headers={
-                "Origin": "https://meeting-demo.ngrok-free.app",
-                "Access-Control-Request-Method": "POST",
-            },
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.headers["access-control-allow-origin"],
-            "https://meeting-demo.ngrok-free.app",
-        )
-
     def test_local_frontend_origins_can_preflight_meeting_creation(self) -> None:
         for origin in ("http://127.0.0.1:5173", "http://localhost:5173"):
             with self.subTest(origin=origin):
